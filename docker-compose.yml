@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb:27017/kraken --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build: ./kraken-backend
+    container_name: backend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      MONGO_URI: "mongodb://mongodb:27017/kraken"
+    volumes:
+      - ./kraken-backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./kraken-front
+    container_name: frontend
+    restart: always
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./kraken-front:/app
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
