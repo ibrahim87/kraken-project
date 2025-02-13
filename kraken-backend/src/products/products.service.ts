@@ -6,17 +6,17 @@ import { Model } from "mongoose";
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Product.name) private itemModel: Model<ProductDocument>,
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
   ) {}
 
   async createOrUpdate(product: Product): Promise<Product> {
-    return this.itemModel.findOneAndUpdate({ name: product.name }, product, {
+    return this.productModel.findOneAndUpdate({ name: product.name }, product, {
       new: true,
       upsert: true,
     });
   }
 
   async findAll(): Promise<Product[]> {
-    return this.itemModel.find().exec();
+    return this.productModel.find().exec();
   }
 }
