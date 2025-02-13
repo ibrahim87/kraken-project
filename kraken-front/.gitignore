@@ -1,0 +1,41 @@
+# Compiled output
+dist/
+out-tsc/
+build/
+
+# Node modules
+node_modules/
+
+# Environment files
+src/environments/environment*.ts
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+logs/
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.swp
+
+# Angular dependencies
+.angular/
+.angular-cache/
+
+# Testing
+coverage/
+junit.xml
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+
+# Firebase (if used)
+firebase.json
+.firebaserc
