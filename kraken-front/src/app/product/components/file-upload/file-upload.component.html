@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+    <span>Kraken File Upload</span>
+</mat-toolbar>
+
+<div class="container">
+    <mat-card class="upload-card">
+        <mat-card-title>Upload an Excel File</mat-card-title>
+        <mat-card-content>
+            <input type="file" (change)="onFileChange($event)" class="file-input">
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="isUploading">
+                <mat-icon>cloud_upload</mat-icon> Upload
+            </button>
+        </mat-card-actions>
+
+        <mat-progress-bar *ngIf="isUploading" mode="indeterminate"></mat-progress-bar>
+
+        <mat-snack-bar *ngIf="message" [ngClass]="{'success': !isUploading, 'error': isUploading}">
+            {{ message }}
+        </mat-snack-bar>
+    </mat-card>
+</div>
