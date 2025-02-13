@@ -1,8 +1,15 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { Product } from "./product.schema";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { ProductsService } from "./products.service";
+import { CreateProductDto } from "./dto/create-product.sto";
 
-@Controller("products")
+@Controller("kraken")
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -11,7 +18,8 @@ export class ProductsController {
    * @param products
    */
   @Post()
-  async create(@Body() products: Product[]) {
+  @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
+  async create(@Body() products: CreateProductDto[]) {
     for (const product of products) {
       await this.productsService.createOrUpdate(product);
     }
@@ -19,7 +27,7 @@ export class ProductsController {
   }
 
   /**
-   * get all products
+   * find all products
    */
   @Get()
   async findAll() {
