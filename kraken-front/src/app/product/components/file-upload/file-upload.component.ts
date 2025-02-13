@@ -5,7 +5,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {NgClass, NgIf} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UploadFileService} from "../../services/upload-file.service";
 import {Product} from "../../models/product.model";
@@ -35,7 +35,7 @@ export class FileUploadComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
     private readonly snackBar: MatSnackBar = inject(MatSnackBar);
 
-    public onFileChange(event: Event) {
+    public onFileChange(event: Event, token: string) {
 
         const file: File | undefined = (event.target as HTMLInputElement).files?.[0];
 
@@ -49,8 +49,9 @@ export class FileUploadComponent {
                 this.showMessage('Invalid or empty file!', true);
                 return;
             }
-
-            this.httpClient.post('http://localhost:3000/kraken', data).subscribe({
+            const token : string | null = localStorage.getItem('auth_token');
+            const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+            this.httpClient.post('http://localhost:3000/kraken', data, {headers}).subscribe({
                 next: () => this.showMessage('File uploaded successfully!', false),
                 error: () => this.showMessage('Error uploading file!', true)
             });
