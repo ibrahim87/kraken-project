@@ -34,7 +34,7 @@ kraken-project/
 ## 🏗️ Installation & Setup
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/your-username/kraken-project.git
+git clone [https://github.com/your-username/kraken-project.git](https://github.com/ibrahim87/kraken-project)
 cd kraken-project
 ```
 
